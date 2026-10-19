@@ -9,7 +9,7 @@ if (isset($_POST['register']))
 
         if ($user -> register($_POST['first_name'] , $_POST['last_name'] , $_POST['email'] , $_POST['password']))
             {
-                header('location: login.html');
+                header('location: login.php');
             }
         else 
             {

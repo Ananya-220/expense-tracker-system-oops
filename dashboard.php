@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['email'])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 ?>
@@ -282,7 +282,7 @@ if (!isset($_SESSION['email'])) {
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -329,7 +329,7 @@ if (!isset($_SESSION['email'])) {
                                             <div class="text-sm font-weight-bold text-success text-uppercase mb-4">
                                                 Expenses (Monthly) </div>
                                             <div class="text-xl h5 mb-0 font-weight-bolder text-gray-800">$215,000</div>
-                                        </div>  
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -408,8 +408,7 @@ if (!isset($_SESSION['email'])) {
                                     <h6 class="m-0 font-weight-bold text-primary">Top 3 Categories</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
                                         </a>
                                     </div>
                                 </div>
@@ -474,7 +473,11 @@ if (!isset($_SESSION['email'])) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <form action="logout.php" method="post">
+                        <button type="submit" class="btn btn-danger">
+                            Logout
+                        </button>
+                    </form> 
                 </div>
             </div>
         </div>
