@@ -62,7 +62,7 @@
                     </li>
 
                     <li class="nav-item ml-2">
-                        <a class="btn btn-primary" href="register.html">
+                        <a class="btn btn-primary" href="register.php">
                             Register
                         </a>
                     </li>
@@ -104,7 +104,7 @@
 
                     </p>
 
-                    <a href="register.html" class="btn btn-primary btn-lg mr-3">
+                    <a href="register.php" class="btn btn-primary btn-lg mr-3">
 
                         Get Started
 

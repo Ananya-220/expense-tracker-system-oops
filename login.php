@@ -52,64 +52,39 @@ if (isset($_SESSION['email'])) {
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <?php
-                                    if (isset($_SESSION['error'])) {
-                                    ?>
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <?php
-                                            echo $_SESSION['error'];
-                                            unset($_SESSION['error']);
-                                            ?>
-                                            <button type="button" class="close" data-dismiss="alert">
-                                                <span>&times;</span>
-                                            </button>
-                                        </div>
-                                    <?php
-                                    }
-                                    ?>
-                                    <form name="login" class="user" action="index.php" method="post">
+                                    <form name="login" class="user" action="login_user.php" method="post">
                                         <div class="form-group">
+                                            <span style="color: red;">
+                                                <?php
+                                                if (isset($_SESSION['error'])) {
+                                                ?>
+                                                    <div class="alert alert-danger">
+                                                        <?php
+                                                        echo $_SESSION['error'];
+                                                        unset($_SESSION['error']);
+                                                        ?>
+                                                    </div>
+                                                <?php
+                                                }
+                                                ?>
+                                            </span>
                                             <input type="email" class="form-control form-control-user" name="email"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                id="email" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address...">
-                                            <?php
-                                            if (isset($_SESSION['email_err'])) {
-                                            ?>
-                                                <div class="alert theme-danger" role="alert">
-                                                    <p style="color: red;"><?php
-                                                                            echo $_SESSION['email_err'];
-                                                                            unset($_SESSION['email_err']);
-                                                                            ?>
-                                                    </p>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
+                                            <p style="color: red;" id="emailErr"></p>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" name="password"
-                                                id="exampleInputPassword" placeholder="Password">
-                                            <?php
-                                            if (isset($_SESSION['password_err'])) {
-                                            ?>
-                                                <div class="alert theme-danger" role="alert">
-                                                    <p style="color: red;"><?php
-                                                                            echo $_SESSION['password_err'];
-                                                                            unset($_SESSION['password_err']);
-                                                                            ?>
-                                                    </p>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
+                                                id="password" placeholder="Password">
+                                            <p style="color: red;" id="passwordErr"></p>
                                         </div>
-                                        <button type="submit" name="login" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" id="login" name="login" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="register.php">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +98,7 @@ if (isset($_SESSION['email'])) {
 
     </div>
 
+    <script src="/js/login.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
