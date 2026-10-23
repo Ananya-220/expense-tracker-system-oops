@@ -4,9 +4,6 @@ $pagename = "Category";
 include_once('sidebar.php');
 require_once('classes/user.php');
 include_once('classes/category.php');
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -46,10 +43,10 @@ include_once('classes/category.php');
 
         <h1 class="h3 mb-0 text-gray-800">Categories</h1>
         <div class="d-grid gap-2 d-md-flex mb-2 justify-content-md-end">
-            <a class="btn btn-primary" type="button" href='add_category_form.php'>+ Add Category</a>
+            <a class="btn btn-primary btn-lg" type="button" href='add_category_form.php'>+ Add Category</a>
         </div>
 
-        <!-- DataTales Example -->
+        <!-- DataTables Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Categories Table</h6>
@@ -66,14 +63,14 @@ include_once('classes/category.php');
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <!-- <tfoot>
+                        <tfoot>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
-                        </tfoot> -->
+                        </tfoot> 
                         <tbody align="center">
                             <?php
                             $categoryObj = new Category();
@@ -88,10 +85,8 @@ include_once('classes/category.php');
                                         <td class="statusBadge" align="center"><span class="badge rounded-pill text-bg-<?php echo $class; ?>"><?php echo $row["status"] == "1" ? "Active" : "Inactive"; ?></span></td>
                                         <td class="table-data align-top" align="center">
                                             <div class="d-grid gap-2 mx-auto d-md-block">
-                                                <a type="button" class="btn btn-success btn-sm" href="edit_categories.php?id=<?php $row["id"];
-                                                                                                                                echo $row['id'] ?>" name="edit">Edit</a>
-                                                <a type="button" class="btn btn-danger btn-sm" href="delete_categories.php?id=<?php $row["id"];
-                                                                                                                                echo $row['id'] ?>" name="delete">Delete</a>
+                                                <a type="button" class="btn btn-success btn-sm" href="edit_category_form.php?id=<?php $row["id"]; echo $row['id'] ?>" name="edit">Edit</a>
+                                                <a type="button" class="btn btn-danger btn-sm" href="delete_category_form.php?id=<?php $row["id"]; echo $row['id'] ?>" name="delete">Delete</a>
                                             </div>
                                         </td>
                                     </tr>

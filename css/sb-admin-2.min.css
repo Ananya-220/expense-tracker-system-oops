@@ -82,7 +82,7 @@ body {
 }
 
 hr {
-    box-sizing: content-box;    
+    box-sizing: content-box;
     height: 0;
     overflow: visible
 }
@@ -11526,8 +11526,12 @@ a:focus {
 }
 
 .sidebar {
-    width: 6.5rem;
-    min-height: 100vh
+    width: 6.8rem;
+    min-height: 100vh;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    align-self: start;
 }
 
 .sidebar .nav-item {
@@ -11535,7 +11539,7 @@ a:focus {
 }
 
 .sidebar .nav-item:last-child {
-    margin-bottom: 1rem
+    margin-bottom: rem
 }
 
 .sidebar .nav-item .nav-link {
@@ -11545,7 +11549,7 @@ a:focus {
 }
 
 .sidebar .nav-item .nav-link span {
-    font-size: .65rem;
+    font-size: 30px;
     display: block
 }
 

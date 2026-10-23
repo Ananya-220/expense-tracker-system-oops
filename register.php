@@ -30,7 +30,7 @@ session_start();
 
     <div class="container">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card o-hidden border-0 shadow-lg my-5 py-5">
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
@@ -42,6 +42,18 @@ session_start();
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
+                            <?php
+                            if (isset($_SESSION['emailExists'])) {
+                            ?>
+                                <div class="alert alert-danger">
+                                    <?php
+                                    echo $_SESSION['emailExists'];
+                                    unset($_SESSION['emailExists']);
+                                    ?>
+                                </div>
+                            <?php
+                            }
+                            ?>
                             <form class="user" action="user_register.php" method="post">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -59,20 +71,6 @@ session_start();
                                     <input type="email" class="form-control form-control-user" name="email"
                                         id="email" placeholder="Email Address">
                                     <p style="color: red;" id="emailErr"></p>
-                                    <span style="color: red;">
-                                        <?php
-                                        if (isset($_SESSION['emailExists'])) {
-                                        ?>
-                                            <div class="alert alert-danger">
-                                                <?php
-                                                echo $_SESSION['emailExists'];
-                                                unset($_SESSION['emailExists']);
-                                                ?>
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-                                    </span>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control form-control-user" name="password"
@@ -95,7 +93,7 @@ session_start();
 
     </div>
 
-    <script src="/js/register.js"></script>
+    <script src="js/register.js"></script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -105,6 +103,7 @@ session_start();
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    
 
 </body>
 

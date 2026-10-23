@@ -1,10 +1,15 @@
 <?php
 session_start();
+$pagename = "Dashboard";
+include_once('sidebar.php');
+require_once('classes/user.php');
+include_once('classes/dashboard.php');
 
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -33,55 +38,61 @@ if (!isset($_SESSION['email'])) {
 
 <body id="page-top">
 
-    <?php
-        $pagename = "Dashboard";
-        include_once('sidebar.php');
-    ?>
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
+        <?php
+        $dashboardObj = new Dashboard();
+        $totalExpense = $dashboardObj->dashboardExpense('total');
+        $monthExpense = $dashboardObj->dashboardExpense('month');
+        ?>
+
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-sm-flex align-items-center mb-5">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         </div>
 
         <!-- Content Row -->
         <div class="row">
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-sm font-weight-bold text-primary text-uppercase mb-4">
-                                    Expenses Till Today</div>
-                                <div class="text-lg h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+            <div class="row col-xl-8 col-lg-7 mb-4">
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-1">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h3 text-sm font-weight-bold text-primary text-uppercase mb-4">
+                                        Expenses Till Today</div>
+                                    <div class="text-xl h4 mb-0 font-weight-bold text-gray-800">
+                                        ₹ <?php echo $totalExpense; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h3 text-sm font-weight-bold text-success text-uppercase mb-4">
+                                        Expenses (Monthly) </div>
+                                    <div class="text-xl h4 mb-0 font-weight-bolder text-gray-800">
+                                        ₹ <?php echo $monthExpense; ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-sm font-weight-bold text-success text-uppercase mb-4">
-                                    Expenses (Monthly) </div>
-                                <div class="text-xl h5 mb-0 font-weight-bolder text-gray-800">$215,000</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Row -->
-
-            <!-- Content Column -->
-            <div class="col-lg-6 mb-4">
+            <div class="col-xl-4 col-lg-4">
 
                 <!-- Project Card Example -->
                 <div class="card shadow mb-4">

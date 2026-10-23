@@ -6,17 +6,21 @@ require_once __DIR__ . '\classes\user.php';
 if (isset($_POST['register'])) {
     $user = new User();
 
-    $check = $user->register_validation($_POST['first_name'] , $_POST['last_name'] , $_POST['email'] , $_POST['password']);
+    $firstName = $_POST['first_name'];
+    $lastName = $_POST['last_name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $check = $user->register_validation($firstName , $lastName , $email , $password);
 
     if ($check === true) {
         if ($user -> emailExists($_POST['email'])) {
             $_SESSION['emailExists'] = "Email already exists.";
-
             header("Location: register.php");
             exit();
         }
 
-        if ($user->register($_POST['first_name'] , $_POST['last_name'] , $_POST['email'] , $_POST['password'])) {
+        if ($user->register($firstName , $lastName , $email , $password)) {
             header("Location: login.php");
             exit();
         }

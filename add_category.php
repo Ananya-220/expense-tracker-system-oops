@@ -8,16 +8,18 @@ if (isset($_POST['addCategory'])) {
 
     $category = new Category();
 
-    $check = $category->addCategoryValidation($_POST['categoryName'], $_POST['status']);
     $name = $_POST['categoryName'];
     $status = $_POST['status'];
+
+    $check = $category->addCategoryValidation($name , $status);
+    
     
     if ($check === true) {
         if ($category -> addCategory($name , $status)) {
-
             header('Location: category.php');
             exit();
-        } else {
+        } 
+        else {
             header('Location: add_category_form.php');
             exit();
         }
@@ -28,6 +30,9 @@ if (isset($_POST['addCategory'])) {
         }
         if ($check == "Status is required !") {
             $_SESSION['statusErr'] = $check;
+        }
+        if ($check == "Category already exists!") {
+            $_SESSION['categoryExists'] = $check;
         }
         header('Location: add_category_form.php');
     }
