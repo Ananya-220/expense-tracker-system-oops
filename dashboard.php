@@ -43,8 +43,10 @@ if (!isset($_SESSION['email'])) {
 
         <?php
         $dashboardObj = new Dashboard();
-        $totalExpense = $dashboardObj->dashboardExpense('total');
+        $totalExpense = $dashboardObj->dashboardExpense('today');
         $monthExpense = $dashboardObj->dashboardExpense('month');
+        $topCategory = $dashboardObj->dashboardCategory();
+        $paymentModes = $dashboardObj->dashboardPaymentMode();
         ?>
 
         <!-- Page Heading -->
@@ -64,7 +66,7 @@ if (!isset($_SESSION['email'])) {
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="h3 text-sm font-weight-bold text-primary text-uppercase mb-4">
-                                        Expenses Till Today</div>
+                                        Today's Expenses </div>
                                     <div class="text-xl h4 mb-0 font-weight-bold text-gray-800">
                                         ₹ <?php echo $totalExpense; ?>
                                     </div>
@@ -81,7 +83,7 @@ if (!isset($_SESSION['email'])) {
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="h3 text-sm font-weight-bold text-success text-uppercase mb-4">
-                                        Expenses (Monthly) </div>
+                                        This Month's Expense </div>
                                     <div class="text-xl h4 mb-0 font-weight-bolder text-gray-800">
                                         ₹ <?php echo $monthExpense; ?>
                                     </div>
@@ -100,18 +102,48 @@ if (!isset($_SESSION['email'])) {
                         <h6 class="m-0 font-weight-bold text-primary">Most Used Payment Mode</h6>
                     </div>
                     <div class="card-body">
-                        <h4 class="small font-weight-bold">Payment mode 1<span
-                                class="float-right">80%</span></h4>
-                        <div class="progress mb-4">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <h4 class="small font-weight-bold">Payment mode 2<span
-                                class="float-right">20%</span></h4>
-                        <div class="progress mb-4">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                        <?php
+                        $total = 0;
+
+                        while ($row = $paymentModes->fetch_assoc()) {
+                            $total += $row['total'];
+                        }
+
+                        $paymentModes->data_seek(0);
+
+                        $colors = [
+                            "bg-primary",
+                            "bg-success",
+                            "bg-info",
+                            "bg-warning",
+                            "bg-danger"
+                        ];
+
+                        $i = 0;
+
+                        while ($row = $paymentModes->fetch_assoc()) {
+
+                            $percentage = ($total > 0) ? round(($row['total'] / $total) * 100) : 0;
+                            $color = $colors[$i % count($colors)];
+                        ?>
+                            <h4 class="small font-weight-bold">
+                                <?php echo $row['payment_mode']; ?>
+                                <span class="float-right"><?php echo $percentage; ?>%</span>
+                            </h4>
+
+                            <div class="progress mb-4">
+                                <div class="progress-bar <?php echo $color; ?>"
+                                    role="progressbar"
+                                    style="width: <?php echo $percentage; ?>%"
+                                    aria-valuenow="<?php echo $percentage; ?>"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+                                </div>
+                            </div>
+                        <?php
+                            $i++;
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -168,20 +200,15 @@ if (!isset($_SESSION['email'])) {
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-pie pt-4 pb-2">
-                            <canvas id="myPieChart"></canvas>
-                        </div>
-                        <div class="mt-4 text-center small">
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> Category 1
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-success"></i> Category 2
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-info"></i> Category 3
-                            </span>
-                        </div>
+                        <h4 class="m-0 font-weight-bold text-primary">
+                            <?php while ($row = $topCategory->fetch_assoc()) { ?>
+                                <div class="mb-3">
+                                    <h5 class="font-weight-bold text-primary">
+                                        <?php echo " -> " . $row['name']; ?>
+                                    </h5>
+                                </div>
+                            <?php } ?>
+                        </h4>
                     </div>
                 </div>
             </div>
