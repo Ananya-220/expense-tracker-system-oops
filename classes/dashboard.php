@@ -42,15 +42,7 @@ class Dashboard
     {
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT category.name,
-                COUNT(*) AS usage_count
-            FROM expense
-            INNER JOIN category
-                ON expense.category_id = category.id
-            WHERE expense.user_id = '$user_id'
-            GROUP BY expense.category_id, category.name
-            ORDER BY usage_count DESC
-            LIMIT 3";
+        $sql = "SELECT category.name , COUNT(*) AS used_count FROM expense INNER JOIN category ON expense.category_id = category.id WHERE expense.user_id = '$user_id' GROUP BY expense.category_id, category.name ORDER BY used_count DESC LIMIT 3";
 
         $result = $this->conn->query($sql);
         return $result;
@@ -60,13 +52,21 @@ class Dashboard
     {
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT payment_mode,
-                   COUNT(*) AS total
-            FROM expense
-            WHERE user_id = '$user_id'
-            GROUP BY payment_mode
-            ORDER BY total DESC";
+        $sql = "SELECT payment_mode , COUNT(*) AS total FROM expense WHERE user_id = '$user_id' GROUP BY payment_mode ORDER BY total DESC";
 
+        $result = $this->conn->query($sql);
+
+        return $result;
+    }
+
+    public function monthlyExpense()
+    {
+        $user_id = $_SESSION['id'];
+
+        $sql = "SELECT YEAR(added_date) AS year , MONTH(added_date) AS month_no , MONTHNAME(added_date) AS month , SUM(amount) AS total
+            FROM expense WHERE user_id = '$user_id' GROUP BY YEAR(added_date) , MONTH(added_date) , MONTHNAME(added_date) ORDER BY
+            YEAR(added_date) DESC , MONTH(added_date) DESC";
+            
         $result = $this->conn->query($sql);
 
         return $result;

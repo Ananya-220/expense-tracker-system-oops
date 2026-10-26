@@ -13,7 +13,7 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider mt-5">
+            <hr class="sidebar-divider">
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item <?php echo ($pagename == "Dashboard") ? 'active' : "";?>">
@@ -23,7 +23,7 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider mt-5">
+            <hr class="sidebar-divider">
 
             <!-- Nav Item - Charts -->
             <li class="nav-item <?php echo ($pagename == "Category" || $pagename == "Add Category" || $pagename == "Edit Category" || $pagename == "Delete Category") ? 'active' : "";?>">
@@ -33,7 +33,7 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider mt-5">
+            <hr class="sidebar-divider">
 
             <!-- Nav Item - Tables -->
             <li class="nav-item <?php echo ($pagename == "Expense" || $pagename == "Add Expense" || $pagename == "Edit Expense" || $pagename == "Delete Expense") ? 'active' : "";?>">
@@ -43,7 +43,7 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block mt-5">
+            <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
