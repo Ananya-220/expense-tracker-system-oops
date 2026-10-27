@@ -11,7 +11,7 @@ if (isset($_POST['addExpense'])) {
     $name = $_POST['expenseName'];
     $amount = $_POST['amount'];
     $payment = $_POST['payment'];
-    $date = date('Y-m-d');
+    $date = $_POST['added_date'];
     $category_id = $_POST['category'];
     $details = $_POST['details'];
 
