@@ -51,6 +51,6 @@ submit.addEventListener("click", (e) => {
     }
     
     if (validation) {
-        alert("Profile Updated Successfully !");
+        console.log("Profile Updated Successfully !");
     }
 });

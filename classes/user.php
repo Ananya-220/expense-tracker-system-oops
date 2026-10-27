@@ -103,7 +103,8 @@ class User
 
         if ($result->num_rows > 0) {
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -121,13 +122,13 @@ class User
         return false;
     }
 
-    public function updateProfile($id, $first_name, $last_name, $mobile)
+    public function updateProfile($id, $first_name, $last_name, $email, $mobile)
     {
         $first_name = trim($first_name);
         $last_name = trim($last_name);
         $mobile = trim($mobile);
 
-        $sql = "UPDATE users SET first_name='$first_name' , last_name='$last_name', mobile='$mobile' WHERE id='$id'";
+        $sql = "UPDATE users SET first_name='$first_name' , last_name='$last_name', email ='$email' ,  mobile='$mobile' WHERE id='$id'";
         $result = $this->conn->query($sql);
         if ($result) {
             return true;
@@ -156,13 +157,13 @@ class User
                 }
             }
 
-            return "Old password is incorrect.";
+            return "Old password is incorrect !";
         }
 
         return "User not found.";
     }
 
-    public function profileValidation($first_name, $last_name, $mobile)
+    public function profileValidation($first_name, $last_name, $email, $mobile)
     {
         if (empty($first_name)) {
             return "First Name is required";
@@ -170,6 +171,11 @@ class User
 
         if (empty($last_name)) {
             return "Last Name is required";
+        }
+        if (!empty($email)) {
+            if (!preg_match('/^[^\s@]+@[^\s@]+\.[^\s@]+$/' , $email)){
+                return "Email is invalid !";
+            }
         }
 
         if (!empty($mobile)) {

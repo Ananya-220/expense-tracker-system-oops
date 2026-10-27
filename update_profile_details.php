@@ -8,16 +8,17 @@ if (isset($_POST['updateProfile'])) {
 
     $first_name = $_POST['first_name'];
     $last_name  = $_POST['last_name'];
-    $mobile     = $_POST['mobile'];
+    $email = $_POST["email"];
+    $mobile = $_POST['mobile'];
 
-    $validation = $user->profileValidation($first_name, $last_name, $mobile);
+    $validation = $user->profileValidation($first_name, $last_name, $email, $mobile);
 
     if ($validation !== true) {
         header("Location: update_profile.php");
         exit;
     }
 
-    if ($user->updateProfile($_SESSION['id'], $first_name, $last_name, $mobile)) {
+    if ($user->updateProfile($_SESSION['id'], $first_name, $last_name, $email, $mobile)) {
         header("Location: profile_page.php");
         exit;
     } 

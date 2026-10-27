@@ -128,7 +128,7 @@ $data = $user->getUser($_SESSION['id']);
                                     <label>Old Password</label>
                                     <input type="password" class="form-control" name="old_password" id="old_password">
                                     <p style="color: red;" id="oldPasswordErr"></p>
-                                    
+
                                 </div>
 
                                 <div class="mb-3">

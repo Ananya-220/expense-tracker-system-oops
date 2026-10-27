@@ -42,6 +42,6 @@ change.addEventListener("click", (e) => {
     }
 
     if (validation) {
-        alert("Password Updated Successfully !");
+        console.log("Password Updated Successfully !");
     }
 });
