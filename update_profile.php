@@ -88,7 +88,7 @@ $data = $user->getUser($_SESSION['id']);
 
                                 <div class="mb-3">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" id="email" value="<?php echo $data['email']; ?>">
+                                    <input type="email" class="form-control" name="email" id="email" value="<?php echo $data['email']; ?>">
                                     <p style="color: red;" id="emailErr"></p>
                                 </div>
 

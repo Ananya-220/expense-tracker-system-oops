@@ -84,8 +84,6 @@ $data = $user->getUser($_SESSION['id']);
 
                                 <a type="submit" class="btn btn-primary" href="update_profile.php">Click here to Update</a>
 
-                            </form>
-
                         </div>
 
                     </div>
