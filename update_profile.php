@@ -55,20 +55,10 @@ $data = $user->getUser($_SESSION['id']);
                     <div class="card shadow">
 
                         <div class="card-header bg-primary text-white">
-                            <h4>My Profile Details</h4>
+                            <h4>Update Profile</h4>
                         </div>
 
                         <div class="card-body">
-
-                            <?php
-                            if (isset($_GET['success'])) {
-                                echo "<div class='alert alert-success'>Profile Updated Successfully.</div>";
-                            }
-
-                            if (isset($_GET['error'])) {
-                                echo "<div class='alert alert-danger'>" . $_GET['error'] . "</div>";
-                            }
-                            ?>
 
                             <form action="update_profile_details.php" method="POST">
 
@@ -108,27 +98,15 @@ $data = $user->getUser($_SESSION['id']);
 
                 </div>
 
-                <!-- Change Password Card -->
-
                 <div class="col-md-6">
 
                     <div class="card shadow">
 
                         <div class="card-header bg-success text-white">
-                            <h4>Change Password</h4>
+                            <h4>Reset Password</h4>
                         </div>
 
                         <div class="card-body">
-
-                            <?php
-                            if (isset($_GET['passsuccess'])) {
-                                echo "<div class='alert alert-success'>Password Changed Successfully.</div>";
-                            }
-
-                            if (isset($_GET['passerror'])) {
-                                echo "<div class='alert alert-danger'>" . $_GET['passerror'] . "</div>";
-                            }
-                            ?>
 
                             <form action="update_profile_details.php" method="POST">
 
