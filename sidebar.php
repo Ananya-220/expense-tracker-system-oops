@@ -16,7 +16,7 @@
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item <?php echo ($pagename == "Dashboard") ? 'active' : "";?>">
+            <li class="nav-item <?php echo ($pagename == "Dashboard") ? 'active' : ""; ?>">
                 <a class="nav-link" href="dashboard.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span style="font-size: large;">Dashboard</span></a>
@@ -26,7 +26,7 @@
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item <?php echo ($pagename == "Category" || $pagename == "Add Category" || $pagename == "Edit Category" || $pagename == "Delete Category") ? 'active' : "";?>">
+            <li class="nav-item <?php echo ($pagename == "Category" || $pagename == "Add Category" || $pagename == "Edit Category" || $pagename == "Delete Category") ? 'active' : ""; ?>">
                 <a class="nav-link" href="category.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span style="font-size: large;">Category</span></a>
@@ -36,7 +36,7 @@
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item <?php echo ($pagename == "Expense" || $pagename == "Add Expense" || $pagename == "Edit Expense" || $pagename == "Delete Expense") ? 'active' : "";?>">
+            <li class="nav-item <?php echo ($pagename == "Expense" || $pagename == "Add Expense" || $pagename == "Edit Expense" || $pagename == "Delete Expense") ? 'active' : ""; ?>">
                 <a class="nav-link" href="expense.php">
                     <i class="fas fa-fw fa-table"></i>
                     <span style="font-size: large;">Expense</span></a>
@@ -44,6 +44,20 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
+
+            <li class="nav-item <?php echo ($pagename == "Profile") ? 'active' : ""; ?>">
+                <a class="nav-link" href="profile_page.php">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle fas fa-fw fa-table" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>
+                    <span style="font-size: large;">Profile</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -227,13 +241,20 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Ananya Sharma</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php 
+                                        require_once('classes/user.php');
+                                        $user = new User();
+                                        $data = $user->getUser($_SESSION['id']);
+                                        echo $data['first_name'] . " " .  $data['last_name'];
+                                    ?>
+                                </span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile_1.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="profile_page.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
