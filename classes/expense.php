@@ -128,36 +128,29 @@ class Expense
 
     public function filterExpense($user_id, $category, $date, $payment)
     {
-        $query = "SELECT expense.*, category.name
-              FROM expense
-              INNER JOIN category
-              ON expense.category_id = category.id
-              WHERE expense.user_id='$user_id'";
+        $sql = "SELECT expense.*, category.name FROM expense INNER JOIN category ON expense.category_id = category.id WHERE expense.user_id='$user_id'";
 
         if ($category != "") {
-            $query .= " AND expense.category_id='$category'";
+            $sql .= " AND expense.category_id='$category'";
         }
 
         if ($date != "") {
-            $query .= " AND expense.added_date='$date'";
+            $sql .= " AND expense.added_date='$date'";
         }
 
         if ($payment != "") {
-            $query .= " AND expense.payment_mode='$payment'";
+            $sql .= " AND expense.payment_mode='$payment'";
         }
 
-        $query .= " ORDER BY expense.added_date DESC";
-
-        return $this->conn->query($query);
+        $sql .= " ORDER BY expense.added_date DESC";
+        $result = $this->conn->query($sql);
+        return $result;
     }
 
     public function getExpenseNames($user_id)
     {
-        $sql = "SELECT DISTINCT expName
-            FROM expense
-            WHERE user_id='$user_id'
-            ORDER BY expName";
-
-        return $this->conn->query($sql);
+        $sql = "SELECT DISTINCT expName FROM expense WHERE user_id='$user_id' ORDER BY expName";        
+        $result = $this->conn->query($sql);
+        return $result;
     }
 }
