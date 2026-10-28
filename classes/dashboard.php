@@ -16,21 +16,18 @@ class Dashboard
         $user_id = $_SESSION['id'];
 
         if ($type == 'today') {
-
             $sub_sql = "AND added_date = '$today'";
-        } elseif ($type == 'month') {
-
-            $from = date('Y-m-01'); // First day of current month
+        } 
+        elseif ($type == 'month') {
+            $from = date('Y-m-01');
             $sub_sql = "AND added_date BETWEEN '$from' AND '$today'";
-        } else {
+        } 
+        else {
 
             $sub_sql = "";
         }
 
-        $sql = "SELECT SUM(amount) AS amount
-            FROM expense
-            WHERE user_id = '$user_id'
-            $sub_sql";
+        $sql = "SELECT SUM(amount) AS amount FROM expense WHERE user_id = '$user_id' $sub_sql";
 
         $result = $this->conn->query($sql);
         $row = $result->fetch_assoc();
@@ -63,9 +60,7 @@ class Dashboard
     {
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT YEAR(added_date) AS year , MONTH(added_date) AS month_no , MONTHNAME(added_date) AS month , SUM(amount) AS total
-            FROM expense WHERE user_id = '$user_id' GROUP BY YEAR(added_date) , MONTH(added_date) , MONTHNAME(added_date) ORDER BY
-            YEAR(added_date) DESC , MONTH(added_date) DESC";
+        $sql = "SELECT YEAR(added_date) AS year , MONTH(added_date) AS month_no , MONTHNAME(added_date) AS month , SUM(amount) AS total FROM expense WHERE user_id = '$user_id' GROUP BY YEAR(added_date) , MONTH(added_date) , MONTHNAME(added_date) ORDER BY YEAR(added_date) DESC , MONTH(added_date) DESC";
             
         $result = $this->conn->query($sql);
 
