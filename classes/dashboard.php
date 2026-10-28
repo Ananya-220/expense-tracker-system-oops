@@ -60,7 +60,7 @@ class Dashboard
     {
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT YEAR(added_date) AS year , MONTH(added_date) AS month_no , MONTHNAME(added_date) AS month , SUM(amount) AS total FROM expense WHERE user_id = '$user_id' GROUP BY YEAR(added_date) , MONTH(added_date) , MONTHNAME(added_date) ORDER BY YEAR(added_date) DESC , MONTH(added_date) DESC";
+        $sql = "SELECT YEAR(added_date) AS year , MONTH(added_date) AS month_no , MONTHNAME(added_date) AS month , SUM(amount) AS total FROM expense WHERE user_id = '$user_id' GROUP BY YEAR(added_date) , MONTH(added_date) , MONTHNAME(added_date) ORDER BY YEAR(added_date) DESC , MONTH(added_date)";
             
         $result = $this->conn->query($sql);
 

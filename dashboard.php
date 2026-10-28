@@ -174,7 +174,7 @@ if (!isset($_SESSION['email'])) {
         <div class="row">
 
             <!-- Expenses Overview -->
-            <div class="col-xl-8 col-lg-8 mt-4">
+            <div class="col-xl-8 col-lg-8">
 
                 <div class="card shadow h-100">
 
@@ -201,21 +201,34 @@ if (!isset($_SESSION['email'])) {
 
                                 <tbody>
 
-                                    <?php while ($row = $monthlyExpense->fetch_assoc()) { ?>
-
+                                    <?php
+                                    $months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                    $expense = [];
+                                    $year = date("Y");
+                                    while ($row = $monthlyExpense->fetch_assoc()) {
+                                        $expense[$row['month']] = $row['total'];
+                                        $year = $row['year'];
+                                    }
+                                    foreach ($months as $month) {
+                                    ?>
                                         <tr>
-
                                             <td>
-                                                <?php echo $row['month'] . " " . $row['year']; ?>
+                                                <?php echo $month . " " . $year; ?>
                                             </td>
-
                                             <td>
-                                                <strong>₹ <?php echo $row['total']; ?></strong>
+                                                <?php
+                                                if (isset($expense[$month])) {
+                                                    echo "₹ " . $expense[$month];
+                                                } 
+                                                else {
+                                                    echo '<span class="text-danger">No Expenses in this month</span>';
+                                                }
+                                                ?>
                                             </td>
-
                                         </tr>
-
-                                    <?php } ?>
+                                    <?php
+                                    }
+                                    ?>
 
                                 </tbody>
 
@@ -233,7 +246,7 @@ if (!isset($_SESSION['email'])) {
             <!-- Top Categories -->
             <div class="col-xl-4 col-lg-4 mt-4">
 
-                <div class="card shadow h-100">
+                <div class="card shadow h-40">
 
                     <div class="card-header py-3">
 
