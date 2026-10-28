@@ -40,7 +40,7 @@ submit.addEventListener("click", (e) => {
     }
     else {
         if (enteredMobile.length != 10) {
-            document.getElementById("mobileErr").innerText = "Mobile Number must contain 10 numbers !";
+            document.getElementById("mobileErr").innerText = "Mobile number must contain exactly 10 digits !";
             validation = false;
     }
     }

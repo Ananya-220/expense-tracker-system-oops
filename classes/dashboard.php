@@ -42,7 +42,7 @@ class Dashboard
     {
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT category.name , COUNT(*) AS used_count FROM expense INNER JOIN category ON expense.category_id = category.id WHERE expense.user_id = '$user_id' GROUP BY expense.category_id, category.name ORDER BY used_count DESC LIMIT 3";
+        $sql = "SELECT category.id , category.name , COUNT(*) AS used_count , SUM(expense.amount) AS total FROM expense INNER JOIN category ON expense.category_id = category.id WHERE expense.user_id = '$user_id' GROUP BY expense.category_id , category.name ORDER BY used_count DESC LIMIT 3";
 
         $result = $this->conn->query($sql);
         return $result;
@@ -52,7 +52,7 @@ class Dashboard
     {
         $user_id = $_SESSION['id'];
 
-        $sql = "SELECT payment_mode , COUNT(*) AS total FROM expense WHERE user_id = '$user_id' GROUP BY payment_mode ORDER BY total DESC";
+        $sql = "SELECT payment_mode , COUNT(*) AS total , SUM(amount) AS amt FROM expense WHERE user_id = '$user_id' GROUP BY payment_mode ORDER BY total DESC";
 
         $result = $this->conn->query($sql);
 

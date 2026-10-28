@@ -40,10 +40,9 @@ session_start();
     <div class="container-fluid">
 
         <!-- Page Heading -->
-
-        <h1 class="h3 mb-0 text-gray-800">Add Category</h1>
-        <div class="d-grid gap-2 d-md-flex mb-1 justify-content-md-end">
-            <a class="btn btn-primary" type="button" href='category.php'>Back -> </a>
+        <div class="d-sm-flex align-items-center justify-content-between mb-5">
+            <h1 class="h3 mb-0 text-gray-800">Add Category</h1>
+            <a class="btn btn-primary btn-md" type="button" href='category.php'>Back -> </a>
         </div>
 
         <!-- DataTales Example -->

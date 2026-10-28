@@ -121,6 +121,7 @@ if (!isset($_SESSION['email'])) {
                                     <th>Sr No.</th>
                                     <th>Payment Mode</th>
                                     <th>Payments Made</th>
+                                    <th>Total Amount</th>
                                 </tr>
                             </thead>
 
@@ -136,13 +137,19 @@ if (!isset($_SESSION['email'])) {
                                         <td><?php echo $srNo++; ?></td>
 
                                         <td>
-                                            <?php echo ucfirst($row['payment_mode']); ?>
+                                            <a href="expense.php?payment=<?php echo urlencode($row['payment_mode']); ?>">
+                                                <?php echo ucfirst($row['payment_mode']); ?>
+                                            </a>
                                         </td>
 
                                         <td>
-                                            <span class="badge badge-primary px-3 py-2">
+                                            <span class="badge badge-primary px-2 py-1">
                                                 <?php echo $row['total']; ?>
                                             </span>
+                                        </td>
+
+                                        <td>
+                                            <?php echo "₹ " . $row['amt']; ?>
                                         </td>
 
                                     </tr>
@@ -249,6 +256,7 @@ if (!isset($_SESSION['email'])) {
                                         <th>Sr No.</th>
                                         <th>Category</th>
                                         <th>Used</th>
+                                        <th>Total</th>
 
                                     </tr>
 
@@ -266,15 +274,21 @@ if (!isset($_SESSION['email'])) {
                                             <td><?php echo $srNo++; ?></td>
 
                                             <td>
-                                                <?php echo ucfirst($row['name']); ?>
+                                                <a href="expense.php?category=<?php echo $row['id']; ?>">
+                                                    <?php echo ucfirst($row['name']); ?>
+                                                </a>
                                             </td>
 
                                             <td>
 
-                                                <span class="badge badge-success px-3 py-2">
+                                                <span class="badge badge-success px-2 py-1">
                                                     <?php echo $row['used_count']; ?>
                                                 </span>
 
+                                            </td>
+
+                                            <td>
+                                                <?php echo "₹" . $row['total']; ?>
                                             </td>
 
                                         </tr>

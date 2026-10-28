@@ -5,6 +5,7 @@ $pagename = "Expense";
 include_once('sidebar.php');
 require_once('classes/user.php');
 include_once('classes/expense.php');
+$expenseObj = new Expense();
 
 ?>
 
@@ -34,10 +35,6 @@ include_once('classes/expense.php');
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
-
-    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
-
 </head>
 
 <body id="page-top">
@@ -46,15 +43,58 @@ include_once('classes/expense.php');
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Expenses</h1>
-        <div class="d-grid gap-2 d-md-flex mb-2 justify-content-md-end">
-            <a class="btn btn-primary btn-lg" type="button" href='add_expense_form.php'>+ Add Expense</a>
+        <div class="d-sm-flex align-items-center justify-content-between mb-5">
+            <h1 class="h3 mb-2 text-gray-800">Expenses</h1>
+            <a class="btn btn-primary btn-md" type="button" href='add_expense_form.php'>+ Add Expense</a>
         </div>
 
         <!-- DataTables Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Expenses Table</h6>
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h5 class="m-0 font-weight-bold text-primary">
+                        Expenses Table
+                    </h5>
+                    <form method="GET" class="d-flex align-items-center flex-wrap gap-2">
+                        <select name="category" class="form-select" style="width:170px;">
+                            <option value="">All Categories</option>
+
+                            <?php
+                            $category = $expenseObj->getCategories($_SESSION['id']);
+                            while ($row = $category->fetch_assoc()) {
+                            ?>
+                                <option value="<?php echo $row['id']; ?>"
+                                    <?php if (isset($_GET['category']) && $_GET['category'] == $row['id']) echo "selected"; ?>>
+                                    <?php echo ucfirst($row['name']); ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+
+                        <select name="payment" class="form-select" style="width:190px;">
+                            <option value="">All Payment Modes</option>
+                            <option value="Cash" <?php if (($_GET['payment'] ?? '') == "Cash") echo "selected"; ?>>Cash</option>
+                            <option value="Card" <?php if (($_GET['payment'] ?? '') == "Card") echo "selected"; ?>>Card</option>
+                            <option value="UPI" <?php if (($_GET['payment'] ?? '') == "UPI") echo "selected"; ?>>UPI</option>
+                        </select>
+
+                        <input type="date" name="date" class="form-control" style="width:144px;"
+                            value="<?php echo $_GET['date'] ?? ''; ?>">
+
+                        <button type="submit" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
+                            </svg>
+                        </button>
+
+                        <a href="expense.php" class="btn btn-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                            </svg>
+                        </a>
+
+                    </form>
+
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -85,7 +125,12 @@ include_once('classes/expense.php');
                         <tbody align="center">
                             <?php
                             $expenseObj = new Expense();
-                            $result = $expenseObj->displayExpense($_SESSION['id']);
+                            $category = $_GET['category'] ?? "";
+                            $date = $_GET['date'] ?? "";
+                            $payment = $_GET['payment'] ?? "";
+
+                            $result = $expenseObj->filterExpense($_SESSION['id'], $category, $date, $payment);
+
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                             ?>
@@ -101,10 +146,6 @@ include_once('classes/expense.php');
                                             $badge = "primary";
                                         } else if (strtolower($row["payment_mode"]) == "upi") {
                                             $badge = "info";
-                                        } else if (strtolower($row["payment_mode"]) == "net banking") {
-                                            $badge = "warning";
-                                        } else if (strtolower($row["payment_mode"]) == "wallet") {
-                                            $badge = "secondary";
                                         } else {
                                             $badge = "dark";
                                         }
@@ -179,12 +220,14 @@ include_once('classes/expense.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a type="button" class="btn btn-success btn-sm" href="edit_expense_form.php?id=<?php $row["id"]; echo $row['id'] ?>" name="edit">
+                                                <a type="button" class="btn btn-success btn-sm" href="edit_expense_form.php?id=<?php $row["id"];
+                                                                                                                                echo $row['id'] ?>" name="edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
                                                     </svg>
                                                 </a>
-                                                <a type="button" class="btn btn-danger btn-sm" href="delete_expense_form.php?id=<?php $row["id"]; echo $row['id'] ?>" name="delete">
+                                                <a type="button" class="btn btn-danger btn-sm" href="delete_expense_form.php?id=<?php $row["id"];
+                                                                                                                                echo $row['id'] ?>" name="delete">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
                                                     </svg>
