@@ -40,8 +40,7 @@ include_once('classes/category.php');
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-5">
-            <h1 class="h3 mb-0 text-gray-800">Categories</h1>
+        <div class="d-sm-flex align-items-center justify-content-end mb-5">
             <a class="btn btn-primary btn-lg" type="button" href='add_category_form.php'>+ Add Category</a>
         </div>
 

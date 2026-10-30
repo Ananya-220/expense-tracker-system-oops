@@ -128,14 +128,18 @@ class Expense
 
     public function filterExpense($user_id, $category, $date, $payment)
     {
-        $sql = "SELECT expense.*, category.name FROM expense INNER JOIN category ON expense.category_id = category.id WHERE expense.user_id='$user_id'";
+        if ($date == "") {
+            $date = date('n');
+        }
+
+        $sql = "SELECT expense.*, category.name
+            FROM expense
+            INNER JOIN category ON expense.category_id = category.id
+            WHERE expense.user_id='$user_id'
+            AND MONTH(expense.added_date)='$date'";
 
         if ($category != "") {
             $sql .= " AND expense.category_id='$category'";
-        }
-
-        if ($date != "") {
-            $sql .= " AND expense.added_date='$date'";
         }
 
         if ($payment != "") {
@@ -143,13 +147,13 @@ class Expense
         }
 
         $sql .= " ORDER BY expense.added_date DESC";
-        $result = $this->conn->query($sql);
-        return $result;
+
+        return $this->conn->query($sql);
     }
 
     public function getExpenseNames($user_id)
     {
-        $sql = "SELECT DISTINCT expName FROM expense WHERE user_id='$user_id' ORDER BY expName";        
+        $sql = "SELECT DISTINCT expName FROM expense WHERE user_id='$user_id' ORDER BY expName";
         $result = $this->conn->query($sql);
         return $result;
     }

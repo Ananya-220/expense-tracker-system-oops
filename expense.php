@@ -43,9 +43,8 @@ $expenseObj = new Expense();
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-5">
-            <h1 class="h3 mb-2 text-gray-800">Expenses</h1>
-            <a class="btn btn-primary btn-md" type="button" href='add_expense_form.php'>+ Add Expense</a>
+        <div class="d-sm-flex align-items-center justify-content-end mb-5">
+            <a class="btn btn-primary btn-lg" type="button" href='add_expense_form.php'>+ Add Expense</a>
         </div>
 
         <!-- DataTables Example -->
@@ -77,19 +76,56 @@ $expenseObj = new Expense();
                             <option value="UPI" <?php if (($_GET['payment'] ?? '') == "UPI") echo "selected"; ?>>UPI</option>
                         </select>
 
-                        <input type="date" name="date" class="form-control" style="width:144px;"
-                            value="<?php echo $_GET['date'] ?? ''; ?>">
+                        <?php
+                        $currentMonth = date('F');
+
+                        if (isset($_GET['month'])) {
+                            $currentMonth = date('F', mktime(0, 0, 0, $_GET['month'], 1));
+                        } elseif (isset($_GET['date']) && $_GET['date'] != "") {
+                            $currentMonth = $_GET['date'];
+                        }
+                        ?>
+
+                        <?php
+                        $months = [
+                            1 => "January",
+                            2 => "February",
+                            3 => "March",
+                            4 => "April",
+                            5 => "May",
+                            6 => "June",
+                            7 => "July",
+                            8 => "August",
+                            9 => "September",
+                            10 => "October",
+                            11 => "November",
+                            12 => "December"
+                        ];
+
+                        $currentMonth = $_GET['date'] ?? $_GET['month'] ?? date('n');
+                        ?>
+
+                        <select name="date" class="form-select" style="width:190px;">
+                            <option value="">Select Month</option>
+
+                            <?php foreach ($months as $num => $name) { ?>
+                                <option value="<?php echo $num; ?>"
+                                    <?php echo ($currentMonth == $num) ? 'selected' : ''; ?>>
+                                    <?php echo $name; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
 
                         <button type="submit" class="btn btn-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
                                 <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z" />
-                            </svg>
+                            </svg> Apply Filter
                         </button>
 
                         <a href="expense.php" class="btn btn-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                 <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                            </svg>
+                            </svg> Reset
                         </a>
 
                     </form>
@@ -124,9 +160,8 @@ $expenseObj = new Expense();
                         </tfoot>
                         <tbody align="center">
                             <?php
-                            $expenseObj = new Expense();
                             $category = $_GET['category'] ?? "";
-                            $date = $_GET['date'] ?? "";
+                            $date = $_GET['date'] ?? $_GET['month'] ?? "";
                             $payment = $_GET['payment'] ?? "";
 
                             $result = $expenseObj->filterExpense($_SESSION['id'], $category, $date, $payment);

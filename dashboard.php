@@ -50,236 +50,88 @@ if (!isset($_SESSION['email'])) {
         $monthlyExpense = $dashboardObj->monthlyExpense();
         ?>
 
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center mb-5">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-        </div>
-
         <!-- ===================== TOP ROW ===================== -->
-        <div class="row">
 
-            <!-- Left Side -->
-            <div class="col-xl-8 col-lg-8">
+        <!-- Left Side -->
+        <div class="col-lg-12">
 
-                <div class="row">
+            <div class="row">
 
-                    <!-- Today's Expense -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100" style="min-height:220px;">
-                            <div class="card-body d-flex flex-column justify-content-center">
+                <!-- Today's Expense -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-left-primary shadow h-100" style="min-height:220px;">
+                        <div class="card-body d-flex flex-column justify-content-center">
 
-                                <div class="h4 text-sm font-weight-bold text-primary text-uppercase mb-2">
-                                    Today's Expenses
-                                </div>
-
-                                <div class="h2 font-weight-bold text-gray-800">
-                                    ₹ <?php echo $todayExpense; ?>
-                                </div>
-
+                            <div class="h4 text-sm font-weight-bold text-primary text-uppercase mb-2">
+                                Today's Expenses
                             </div>
+
+                            <div class="h2 font-weight-bold text-gray-800">
+                                ₹ <?php echo $todayExpense; ?>
+                            </div>
+
                         </div>
                     </div>
-
-                    <!-- This Month -->
-                    <div class="col-md-6 mb-4">
-                        <div class="card border-left-success shadow h-100" style="min-height:220px;">
-                            <div class="card-body d-flex flex-column justify-content-center">
-
-                                <div class="h4 text-sm font-weight-bold text-success text-uppercase mb-2">
-                                    Expenses (This Month)
-                                </div>
-
-                                <div class="h2 font-weight-bold text-gray-800">
-                                    ₹ <?php echo $monthExpense; ?>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
-            </div>
+                <!-- This Month -->
+                <div class="col-lg-6 mb-4">
+                    <div class="card border-left-success shadow h-100" style="min-height:220px;">
+                        <div class="card-body d-flex flex-column justify-content-center">
 
-            <!-- Right Side -->
-            <div class="col-xl-4 col-lg-4">
+                            <div class="h4 text-sm font-weight-bold text-success text-uppercase mb-2">
+                                Expenses (This Month)
+                            </div>
 
-                <div class="card shadow h-100">
+                            <div class="h2 font-weight-bold text-gray-800">
+                                ₹ <?php echo $monthExpense; ?>
+                            </div>
 
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            Most Used Payment Mode
-                        </h6>
+                        </div>
                     </div>
-
-                    <div class="card-body">
-
-                        <table class="table table-bordered table-hover text-center">
-
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Payment Mode</th>
-                                    <th>Payments Made</th>
-                                    <th>Total Amount</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                                <?php
-                                $srNo = 1;
-                                while ($row = $paymentModes->fetch_assoc()) {
-                                ?>
-
-                                    <tr>
-
-                                        <td><?php echo $srNo++; ?></td>
-
-                                        <td>
-                                            <a href="expense.php?payment=<?php echo urlencode($row['payment_mode']); ?>">
-                                                <?php echo ucfirst($row['payment_mode']); ?>
-                                            </a>
-                                        </td>
-
-                                        <td>
-                                            <span class="badge badge-primary px-2 py-1">
-                                                <?php echo $row['total']; ?>
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <?php echo "₹ " . $row['amt']; ?>
-                                        </td>
-
-                                    </tr>
-
-                                <?php } ?>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
                 </div>
 
             </div>
 
         </div>
+
         <!-- ===================== END TOP ROW ===================== -->
 
 
         <!-- ===================== SECOND ROW ===================== -->
-        <div class="row">
+        <div class="col-lg-12 mt-2">
 
-            <!-- Expenses Overview -->
-            <div class="col-xl-8 col-lg-8">
+            <div class="row">
 
-                <div class="card shadow h-100">
 
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            Expenses Overview
-                        </h6>
-                    </div>
+                <div class="col-lg-6 mb-4">
 
-                    <div class="card-body">
+                    <div class="card shadow h-100">
 
-                        <div class="table-responsive">
-
-                            <table class="table table-bordered table-hover text-center">
-
-                                <thead class="thead-light">
-
-                                    <tr>
-                                        <th width="60%">Month</th>
-                                        <th>Total Expense (₹)</th>
-                                    </tr>
-
-                                </thead>
-
-                                <tbody>
-
-                                    <?php
-                                    $months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                                    $expense = [];
-                                    $year = date("Y");
-                                    while ($row = $monthlyExpense->fetch_assoc()) {
-                                        $expense[$row['month']] = $row['total'];
-                                        $year = $row['year'];
-                                    }
-                                    foreach ($months as $month) {
-                                    ?>
-                                        <tr>
-                                            <td>
-                                                <?php echo $month . " " . $year; ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                if (isset($expense[$month])) {
-                                                    echo "₹ " . $expense[$month];
-                                                } 
-                                                else {
-                                                    echo '<span class="text-danger">No Expenses in this month</span>';
-                                                }
-                                                ?>
-                                            </td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-
-                                </tbody>
-
-                            </table>
-
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Most Used Payment Mode
+                            </h6>
                         </div>
 
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Top Categories -->
-            <div class="col-xl-4 col-lg-4 mt-4">
-
-                <div class="card shadow h-40">
-
-                    <div class="card-header py-3">
-
-                        <h6 class="m-0 font-weight-bold text-primary">
-                            Top 3 Categories
-                        </h6>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="table-responsive">
+                        <div class="card-body">
 
                             <table class="table table-bordered table-hover text-center">
 
                                 <thead class="thead-light">
-
                                     <tr>
-
                                         <th>Sr No.</th>
-                                        <th>Category</th>
-                                        <th>Used</th>
-                                        <th>Total</th>
-
+                                        <th>Payment Mode</th>
+                                        <th>Payments Made</th>
+                                        <th>Total Amount</th>
                                     </tr>
-
                                 </thead>
 
                                 <tbody>
 
                                     <?php
                                     $srNo = 1;
-                                    while ($row = $topCategory->fetch_assoc()) {
+                                    while ($row = $paymentModes->fetch_assoc()) {
                                     ?>
 
                                         <tr>
@@ -287,21 +139,19 @@ if (!isset($_SESSION['email'])) {
                                             <td><?php echo $srNo++; ?></td>
 
                                             <td>
-                                                <a href="expense.php?category=<?php echo $row['id']; ?>">
-                                                    <?php echo ucfirst($row['name']); ?>
+                                                <a href="expense.php?payment=<?php echo urlencode($row['payment_mode']); ?>">
+                                                    <?php echo ucfirst($row['payment_mode']); ?>
                                                 </a>
                                             </td>
 
                                             <td>
-
-                                                <span class="badge badge-success px-2 py-1">
-                                                    <?php echo $row['used_count']; ?>
+                                                <span class="badge badge-primary px-2 py-1">
+                                                    <?php echo $row['total']; ?>
                                                 </span>
-
                                             </td>
 
                                             <td>
-                                                <?php echo "₹" . $row['total']; ?>
+                                                <?php echo "₹ " . $row['amt']; ?>
                                             </td>
 
                                         </tr>
@@ -318,10 +168,157 @@ if (!isset($_SESSION['email'])) {
 
                 </div>
 
+
+
+                <!-- Top Categories -->
+                <div class="col-lg-6 mb-4">
+
+                    <div class="card shadow h-40">
+
+                        <div class="card-header py-3">
+
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Top 3 Categories
+                            </h6>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-hover text-center">
+
+                                    <thead class="thead-light">
+
+                                        <tr>
+
+                                            <th>Sr No.</th>
+                                            <th>Category</th>
+                                            <th>Used</th>
+                                            <th>Total</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        <?php
+                                        $srNo = 1;
+                                        while ($row = $topCategory->fetch_assoc()) {
+                                        ?>
+
+                                            <tr>
+
+                                                <td><?php echo $srNo++; ?></td>
+
+                                                <td>
+                                                    <a href="expense.php?category=<?php echo $row['id']; ?>&month=<?php echo date('n'); ?>">
+                                                        <?php echo ucfirst($row['name']); ?>
+                                                    </a>
+                                                </td>
+
+                                                <td>
+
+                                                    <span class="badge badge-success px-2 py-1">
+                                                        <?php echo $row['used_count']; ?>
+                                                    </span>
+
+                                                </td>
+
+                                                <td>
+                                                    <?php echo "₹" . $row['total']; ?>
+                                                </td>
+
+                                            </tr>
+
+                                        <?php } ?>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <!-- ===================== END SECOND ROW ===================== -->
+
+        <!-- Expenses Overview -->
+        <div class="col-lg-12 mt-2">
+
+            <div class="card shadow h-50">
+
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Expenses Overview
+                    </h6>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-hover text-center">
+
+                            <thead class="thead-light">
+
+                                <tr>
+                                    <th width="60%">Month</th>
+                                    <th>Total Expense (₹)</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <?php
+                                $months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                $expense = [];
+                                $year = date("Y");
+                                while ($row = $monthlyExpense->fetch_assoc()) {
+                                    $expense[$row['month']] = $row['total'];
+                                    $year = $row['year'];
+                                }
+                                foreach ($months as $month) {
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $month . " " . $year; ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if (isset($expense[$month])) {
+                                                echo "₹ " . $expense[$month];
+                                            } else {
+                                                echo '<span class="text-danger">No Expenses in this month</span>';
+                                            }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
-        <!-- ===================== END SECOND ROW ===================== -->
     </div>
     <!-- /.container-fluid -->
 
