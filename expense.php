@@ -187,7 +187,7 @@ $expenseObj = new Expense();
                                         ?>
 
                                         <td class="text-center align-middle">
-                                            <span class="badge rounded-pill px-3 py-2 text-bg-<?php echo $badge; ?>">
+                                            <span class="badge rounded-pill px-2 py-1 text-bg-<?php echo $badge; ?>">
                                                 <?php echo ucfirst($row["payment_mode"]); ?>
                                             </span>
                                         </td>
