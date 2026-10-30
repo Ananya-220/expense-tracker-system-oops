@@ -61,7 +61,7 @@ include_once('classes/category.php');
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
+                        <tfoot align="center">
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
