@@ -53,7 +53,7 @@ if (!isset($_SESSION['email'])) {
         <!-- ===================== TOP ROW ===================== -->
 
         <!-- Left Side -->
-        <div class="col-lg-12">
+        <div class="col-lg-12 mt-2">
 
             <div class="row">
 
@@ -139,7 +139,7 @@ if (!isset($_SESSION['email'])) {
                                             <td><?php echo $srNo++; ?></td>
 
                                             <td>
-                                                <a href="expense.php?payment=<?php echo urlencode($row['payment_mode']); ?>">
+                                                <a href="expense.php?payment=<?php echo urlencode($row['payment_mode']);?>&month=<?php echo date('n'); ?>">
                                                     <?php echo ucfirst($row['payment_mode']); ?>
                                                 </a>
                                             </td>
@@ -255,7 +255,7 @@ if (!isset($_SESSION['email'])) {
         <!-- Expenses Overview -->
         <div class="col-lg-12 mt-2">
 
-            <div class="card shadow h-50">
+            <div class="card shadow h-60">
 
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
